@@ -5,7 +5,8 @@
     </button>
     <span>Heroes App</span>
     <span class="spacer"></span>
-    <button mat-button>Logout</button>
+    <span>{{authUser?.email}}</span>
+    <button mat-button (click)="logout()">Logout</button>
   </mat-toolbar>
 
   <mat-sidenav #sidenav mode="push" [ngStyle]="{width:'250px'}">
