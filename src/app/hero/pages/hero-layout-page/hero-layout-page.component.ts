@@ -29,7 +29,7 @@ export class HeroLayoutPageComponent {
   constructor(private authService: AuthService, private router: Router) {}
 
   get authUser() {
-    return this.authService.authUser;
+    return this.authService.authUser();
   }
 
   logout() {

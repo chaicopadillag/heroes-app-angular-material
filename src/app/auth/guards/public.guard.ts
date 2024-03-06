@@ -5,7 +5,7 @@ import {
   Router,
   RouterStateSnapshot,
 } from '@angular/router';
-import { map, tap } from 'rxjs';
+import { AuthStatus } from '../interfaces/auth.interface';
 import { AuthService } from '../services/auth.service';
 
 export const canNotActivateGuard: CanActivateChildFn = (
@@ -16,13 +16,10 @@ export const canNotActivateGuard: CanActivateChildFn = (
 
   const router = inject(Router);
 
-  return authService.verifyToken().pipe(
-    tap((isAuthenticated) => console.log('isAuthenticated =', isAuthenticated)),
-    tap((isAuthenticated) => {
-      if (isAuthenticated) {
-        router.navigate(['/hero/list']);
-      }
-    }),
-    map((isAuth) => !isAuth)
-  );
+  if (authService.authStatus() === AuthStatus.authenticated) {
+    router.navigate(['hero/list']);
+    return false;
+  }
+
+  return true;
 };

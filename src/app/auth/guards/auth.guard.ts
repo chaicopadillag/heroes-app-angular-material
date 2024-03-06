@@ -8,21 +8,20 @@ import {
   RouterStateSnapshot,
   UrlSegment,
 } from '@angular/router';
-import { Observable, tap } from 'rxjs';
+import { AuthStatus } from '../interfaces/auth.interface';
 import { AuthService } from '../services/auth.service';
 
-const verifyAuthUserStatus = (): Observable<boolean> => {
+const verifyAuthUserStatus = (): boolean => {
   const authService = inject(AuthService);
   const router = inject(Router);
 
-  return authService.verifyToken().pipe(
-    tap((isAuthenticated) => console.log('isAuthenticated =', isAuthenticated)),
-    tap((isAuthenticated) => {
-      if (!isAuthenticated) {
-        router.navigate(['/auht/login']);
-      }
-    })
-  );
+  if (authService.authStatus() === AuthStatus.authenticated) {
+    console.log('isAuthenticated =', authService.authStatus());
+    return true;
+  }
+
+  router.navigate(['auth/login']);
+  return false;
 };
 
 export const canActivateGuard: CanActivateChildFn = (

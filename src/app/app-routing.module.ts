@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { canActivateGuard, canMatchGuard } from './auth/guards/auth.guard';
-import { canNotActivateGuard } from './auth/guards/public.guard';
 import { NotFoundPageComponent } from './shared/pages/not-found-page/not-found-page.component';
+import { canNotActivateGuard } from './auth/guards/public.guard';
 
 const routes: Routes = [
   {

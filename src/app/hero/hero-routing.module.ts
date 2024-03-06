@@ -12,12 +12,12 @@ const routes: Routes = [
     component: HeroLayoutPageComponent,
     children: [
       {
-        path: 'search',
-        component: SearchPageComponent,
-      },
-      {
         path: 'list',
         component: ListPageComponent,
+      },
+      {
+        path: 'search',
+        component: SearchPageComponent,
       },
       {
         path: 'create',

@@ -1,6 +1,9 @@
 import { Component } from '@angular/core';
+import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
+
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-login-page',
@@ -8,17 +11,32 @@ import { AuthService } from '../../services/auth.service';
   styles: ``,
 })
 export class LoginPageComponent {
-  constructor(private auth: AuthService, private router: Router) {}
+  public formLogin = this.fb.group({
+    email: ['jose@gmail.com', [Validators.required, Validators.email]],
+    password: ['1234567', [Validators.required, Validators.minLength(6)]],
+  });
+
+  constructor(
+    private fb: FormBuilder,
+    private auth: AuthService,
+    private router: Router
+  ) {}
 
   login() {
-    this.auth
-      .login({
-        email: 'Alfred44@gmail.com',
-        password: 'lcRWNZXuRn0_tcs',
-      })
-      .subscribe((user) => {
+    if (this.formLogin.invalid) return;
+
+    this.auth.login(this.formLogin.value as any).subscribe({
+      next: (user) => {
         console.log(user);
-        this.router.navigateByUrl('/');
-      });
+        this.router.navigateByUrl('hero/list');
+      },
+      error: (err) => {
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'Credenciales incorrecta!',
+        });
+      },
+    });
   }
 }

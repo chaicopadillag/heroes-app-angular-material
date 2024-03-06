@@ -1,13 +1,13 @@
-<div class="flex flex-column">
+<form class="flex flex-column" [formGroup]="formLogin">
   <span class="text-lg mb-4">Login</span>
   <mat-form-field>
     <mat-label>Email</mat-label>
-    <input type="email" matInput placeholder="Email">
+    <input type="email" matInput placeholder="Email" formControlName="email">
   </mat-form-field>
 
   <mat-form-field>
     <mat-label>Password</mat-label>
-    <input type="password" matInput placeholder="Password">
+    <input type="password" matInput placeholder="Password" formControlName="password">
   </mat-form-field>
 
   <button mat-button mat-flat-button color="primary" (click)="login()">
@@ -18,4 +18,4 @@
   <div class="flex justify-content-end mt-5">
     <a routerLink="/auth/register">¿No tienes una cuenta?</a>
   </div>
-</div>
+</form>

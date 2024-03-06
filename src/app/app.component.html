@@ -1,1 +1,2 @@
-<router-outlet />
+<div *ngIf="!isUserAuthenticated()">Loading...</div>
+<router-outlet *ngIf="isUserAuthenticated()" />
