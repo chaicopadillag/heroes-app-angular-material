@@ -1,5 +1,5 @@
 <h1>
-  {{currentHero.id ? "Editar":"Agregar"}}
+  {{currentHero._id ? "Editar":"Agregar"}}
   héroe
 </h1>
 
@@ -50,7 +50,7 @@
 
         </form>
         <div class="flex justify-content-between">
-          <button *ngIf="currentHero.id" mat-flat-button color="warn" (click)="deleteHero()">
+          <button *ngIf="currentHero._id" mat-flat-button color="warn" (click)="deleteHero()">
             Borrar
           </button>
           <span></span>

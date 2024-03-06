@@ -11,33 +11,33 @@ export class HeroService {
   constructor(private httpClient: HttpClient) {}
 
   getHeroes() {
-    return this.httpClient.get<HeroType[]>(`${this.apiUrl}/heroes`);
+    return this.httpClient.get<HeroType[]>(`${this.apiUrl}/hero`);
   }
   getHeroesSuggestions(keyword: string) {
-    return this.httpClient.get<HeroType[]>(
-      `${this.apiUrl}/heroes?_q=${keyword}&_limit=6`
-    );
+    return this.httpClient.get<HeroType[]>(`${this.apiUrl}/hero?q=${keyword}`);
   }
 
   getHero(name: string) {
     return this.httpClient
-      .get<HeroType | null>(`${this.apiUrl}/heroes/${name}`)
+      .get<HeroType | null>(`${this.apiUrl}/hero/${name}`)
       .pipe(catchError((err) => of(null)));
   }
 
   create(hero: HeroType) {
-    return this.httpClient.post<HeroType>(`${this.apiUrl}/heroes`, hero);
+    const { _id: _, slug: __, ...restHero } = hero;
+    return this.httpClient.post<HeroType>(`${this.apiUrl}/hero`, restHero);
   }
 
   update(hero: HeroType) {
+    const { _id, slug: __, ...restHero } = hero;
     return this.httpClient.patch<HeroType>(
-      `${this.apiUrl}/heroes/${hero.id}`,
-      hero
+      `${this.apiUrl}/hero/${_id}`,
+      restHero
     );
   }
   delete(heroId: string) {
     return this.httpClient
-      .delete<boolean>(`${this.apiUrl}/heroes/${heroId}`)
+      .delete<boolean>(`${this.apiUrl}/hero/${heroId}`)
       .pipe(
         map((res) => true),
         catchError((err) => of(false))

@@ -18,13 +18,14 @@ import { HeroService } from '../../services/heroes.service';
 })
 export class CreatePageComponent implements OnInit {
   public heroForm = new FormGroup({
-    id: new FormControl(''),
+    _id: new FormControl(''),
     superhero: new FormControl('', { nonNullable: true }),
     publisher: new FormControl<Publisher>(Publisher.DCComics),
     alter_ego: new FormControl(''),
     first_appearance: new FormControl(''),
     characters: new FormControl(''),
     alt_img: new FormControl(''),
+    slug: new FormControl(''),
   });
 
   public publishers = [
@@ -59,12 +60,12 @@ export class CreatePageComponent implements OnInit {
   submitHero() {
     if (!this.heroForm.valid) return;
 
-    if (this.currentHero.id) {
+    if (this.currentHero._id) {
       this.heroService.update(this.currentHero).subscribe(console.log);
     } else {
       this.heroService.create(this.currentHero).subscribe((hero) => {
         this.showMessaje(`${hero.superhero} created!`);
-        this.ruter.navigate(['/hero/edit', hero.id]);
+        this.ruter.navigate(['/hero/edit', hero._id]);
       });
     }
   }
@@ -82,7 +83,7 @@ export class CreatePageComponent implements OnInit {
       .afterClosed()
       .pipe(
         filter((isOk) => isOk),
-        switchMap((_) => this.heroService.delete(this.currentHero.id)),
+        switchMap((_) => this.heroService.delete(this.currentHero._id)),
         filter((isDeleted) => isDeleted)
       )
       .subscribe(() => {

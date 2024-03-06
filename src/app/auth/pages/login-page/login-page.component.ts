@@ -12,8 +12,8 @@ import Swal from 'sweetalert2';
 })
 export class LoginPageComponent {
   public formLogin = this.fb.group({
-    email: ['jose@gmail.com', [Validators.required, Validators.email]],
-    password: ['1234567', [Validators.required, Validators.minLength(6)]],
+    email: ['john.due@gmail.com', [Validators.required, Validators.email]],
+    password: ['123456', [Validators.required, Validators.minLength(6)]],
   });
 
   constructor(
